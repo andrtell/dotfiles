@@ -1,2 +1,2 @@
 # dotfiles
-Files to configure stuff
+Files to configure stuff.
