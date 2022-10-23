@@ -60,7 +60,7 @@ bindsym $mod+Shift+e exit
 bindsym $mod+w kill
 bindsym $mod+Return exec kitty
 for_window [app_id="^menu$"] floating enable,border pixel 3,resize set 970 600
-bindsym $mod+d exec alacritty --class=menu -e /bin/bash -c $HOME/bin/launcher
+bindsym $mod+d exec alacritty --class=menu -e /bin/bash -c $HOME/repo/andrtell/scripts/launcher
 bindsym $mod+$left  focus left
 bindsym $mod+$down  focus down
 bindsym $mod+$up    focus up
