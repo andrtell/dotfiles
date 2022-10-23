@@ -1,0 +1,76 @@
+window:
+  decorations: none
+  opacity: 1.0
+
+  dynamic_padding: true
+
+  dynamic_title: true
+
+  padding:
+    x: 5
+    y: 5
+
+  title: terminal
+
+  class:
+    instance: terminal
+    general: terminal
+
+scrolling:
+  history: 10000
+  multiplier: 4
+
+font:
+  size: 19.0
+
+  normal:
+    family: JetBrains Mono
+    style: Regular 
+
+  bold:
+    style: Regular
+
+  bold_italic:
+    style: Regular
+
+  offset:
+    x: 0
+    y: 0
+
+draw_bold_text_with_bright_colors: false
+
+
+selection:
+  save_to_clipboard: true
+
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
+
+schemes:
+  everforest_dark_hard: &everforest_dark_hard
+
+    primary:
+      background: '#2b3339'
+      foreground: '#d3c6aa'
+
+    normal:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+
+    bright:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+
+colors: *everforest_dark_hard
