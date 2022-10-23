@@ -1,4 +1,5 @@
 syn clear
 syn case match
 
-syn region shComment	start="\#" end="$"
+syn match	shComment		"^\s*\zs#.*$"
+syn match	shComment		"\s\zs#.*$"
