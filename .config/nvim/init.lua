@@ -83,6 +83,11 @@ function _G.make_tabline()
   return s
 end
 
+function template_cmd(dir)
+  find = string.format([[find %s -type f -not -path "*/.git/*" -mindepth 2 -printf "%s/%%P\n"]], dir, dir)
+  return string.format(":call fzf#run(fzf#wrap({'source': '%s', 'sink': '.-1read'}))<cr>", find)
+end
+
 -- Packer
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -143,6 +148,8 @@ k('n', '<space>`', ':Sayonara!<cr>')
 k('n', '<space>~', ':qall!<cr>')
 
 k('n', '\\', ':NvimTreeToggle<CR>')
+
+k('n', '<space>t', template_cmd(os.getenv("TEMPLATES_DIR")))
 
 -- Auto-commands
 aug('autosave', {'CursorHold * silent! call v:lua.autosave()'})
