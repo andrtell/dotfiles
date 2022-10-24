@@ -81,6 +81,9 @@ c 'hi! link javascriptComment Gray'
 -- Typescript syntax
 c 'hi! link typescriptComment Gray'
 
+-- HTML syntax
+c 'hi! link htmlComment Gray'
+
 -- NvimTree
 c 'hi! link NvimTreeFolderIcon        Normal'
 c 'hi! link NvimTreeFolderName        Normal'
