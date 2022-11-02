@@ -1,8 +1,11 @@
 #!/bin/env bash
+export PGBIN=/usr/lib/psql14/bin
+
 paths=(\
   $HOME/bin \
   $HOME/.npm_installed/bin \
   $HOME/repo/andrtell/scripts \
+  $PGBIN
 )
 
 for p in "${paths[@]}"; do

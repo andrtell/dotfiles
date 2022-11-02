@@ -64,10 +64,17 @@ c 'hi! link luaComment Gray'
 
 -- Elixir syntax
 c 'hi! link elixirComment Gray'
+c 'hi! link elixirDoc Gray'
 c 'hi! link elixirDocString Gray'
+c 'hi! link elixirDocStringDelimiter Gray'
+
 
 -- Css syntax
 c 'hi! link cssComment Gray'
+
+-- Sass syntax
+c 'hi! link sassComment Gray'
+c 'hi! link scssComment Gray'
 
 -- (BA)SH syntax
 c 'hi! link shComment Gray'

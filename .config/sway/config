@@ -1,30 +1,40 @@
-# Colors (everforest)
-set $black   #4b565c
-set $red     #e67e80
-set $green   #a7c080
-set $yellow  #dbbc7f
-set $blue    #7fbbb3
-set $magenta #d699b6
-set $cyan    #83c092
-set $white   #d3c6aa
-set $black1  #231f20
-set $black2  #2b3339
-set $gray1   #95a299
-set $gray2   #505050
+set {
+  $dark        #040606
+  $black       #161821
+  $red         #e27878
+  $green       #b4be82
+  $yellow      #e2a478
+  $blue        #84a0c6
+  $magenta     #a093c7
+  $cyan        #89b8c2
+  $white       #c6c8d1
+  $bright      #ffffff
+  $transparent #FF000000
+}
 
-# Borders               title     title-bg title-text new-indi childborder
-client.focused          $gray1    $black2  $white     $black2  $gray1
-client.focused_inactive $black2   $black2  $white     $gray2   $black2
-client.unfocused        $black2   $black1  $white     $gray2   $black2
-client.urgent           $white    $white   $red       $gray2   $black2
+#                         border   backgrnd text    indic    chld
+client.focused            $black   $black   $bright $blue    $black
+client.unfocused          $dark    $dark    $blue   $dark    $dark
+client.focused_inactive   $dark    $dark    $blue   $dark    $dark
+client.urgent             $red     $red     $white  $red     $red
+client.placeholder        $dark    $dark    $white  $white   $dark
 
-# Layout
 default_border pixel 2
-titlebar_border_thickness 1
-titlebar_padding 3
-hide_edge_borders --i3 smart
+default_floating_border pixel 2
+titlebar_border_thickness 2
+titlebar_padding 10 6
 
-# Hide mouse-pointer after 1 s
+smart_gaps off
+smart_borders off
+
+gaps inner 12
+gaps outer 2
+
+hide_edge_borders none
+
+focus_follows_mouse no
+focus_on_window_activation smart
+
 seat * hide_cursor 1000
 
 # Screens
@@ -45,7 +55,7 @@ output * bg $HOME/store/images/convenience_store.jpg fill
 # Keyboard
 input * {
 	xkb_options ctrl:nocaps
-	repeat_delay 190
+	repeat_delay 210
 	repeat_rate 55
 }
 

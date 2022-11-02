@@ -140,16 +140,26 @@ k('n', '<C-l>', '<C-w>l')
 k('n', '<bs>', ':nohl<cr>')
 k('n', 'j', 'gj')
 k('n', 'k', 'gk')
-
 k('n', '<space>0', ':execute \'Files\' $HOME<cr>')
 k('n', '<space>f', ':execute \'Files\' v:lua.git_root()<cr>')
-
 k('n', '<space>`', ':Sayonara!<cr>')
 k('n', '<space>~', ':qall!<cr>')
 
 k('n', '\\', ':NvimTreeToggle<CR>')
+k('n', '<space><space>', ':NvimTreeFindFile<CR>')
 
 k('n', '<space>t', template_cmd(os.getenv("TEMPLATES_DIR")))
+c [[imap <silent><expr> <C-j> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '']]
+
+k('n', '<F10>',
+  [[:echo "hi<" . ]] ..
+  [[ synIDattr(synID(line("."),col("."),1),"name") . ]] ..
+  [[ '> trans<' . ]] ..
+  [[ synIDattr(synID(line("."),col("."),0),"name") . ]] ..
+  [[ "> lo<" . ]] ..
+  [[ synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ]] ..
+  [[ ">" ]] ..
+  [[ <CR>]])
 
 -- Auto-commands
 aug('autosave', {'CursorHold * silent! call v:lua.autosave()'})
@@ -157,6 +167,39 @@ aug('statusline', { 'VimEnter,WinEnter,BufWinEnter * call v:lua.refresh_statusli
 
 -- Colors
 require('colors')
+
+-- LSP
+
+-- local on_attach = function(client, bufnr)
+--   -- Enable completion triggered by <c-x><c-o>
+--   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+--   -- Mappings.
+--   -- See `:help vim.lsp.*` for documentation on any of the below functions
+--   local bufopts = { noremap=true, silent=true, buffer=bufnr }
+--   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+--   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+--   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+--   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+--   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+--   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+--   vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+--   vim.keymap.set('n', '<space>wl', function()
+--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+--   end, bufopts)
+--   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+--   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+--   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+--   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+--   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+-- end
+
+-- on_attach = on_attach
+
+require'lspconfig'.elixirls.setup{
+    cmd = { "/home/tell/repo/other/elixir-ls/rel/language_server.sh" };
+}
+
 
 -- FZF
 vim.env.FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
@@ -199,7 +242,7 @@ require("nvim-tree").setup {
     ignore_list = {},
   },
   view = {
-    width = '200',
+    width = '230',
     -- height = 30,
     hide_root_folder = false,
     side = 'right',
