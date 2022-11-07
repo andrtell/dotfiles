@@ -13,7 +13,7 @@ set {
 }
 
 #                         border   backgrnd text    indic    chld
-client.focused            $black   $black   $bright $blue    $black
+client.focused            $black   $black   $yellow $blue    $yellow
 client.unfocused          $dark    $dark    $blue   $dark    $dark
 client.focused_inactive   $dark    $dark    $blue   $dark    $dark
 client.urgent             $red     $red     $white  $red     $red
@@ -24,10 +24,10 @@ default_floating_border pixel 2
 titlebar_border_thickness 2
 titlebar_padding 10 6
 
-smart_gaps off
-smart_borders off
+smart_gaps on
+smart_borders on
 
-gaps inner 12
+gaps inner 2
 gaps outer 2
 
 hide_edge_borders none

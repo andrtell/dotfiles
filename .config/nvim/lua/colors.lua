@@ -91,6 +91,9 @@ c 'hi! link typescriptComment Gray'
 -- HTML syntax
 c 'hi! link htmlComment Gray'
 
+-- Swayconfig
+c 'hi! link swayComment Gray'
+
 -- NvimTree
 c 'hi! link NvimTreeFolderIcon        Normal'
 c 'hi! link NvimTreeFolderName        Normal'
