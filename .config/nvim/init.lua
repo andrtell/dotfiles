@@ -102,6 +102,29 @@ require('packer').startup(function()
       'mhinz/vim-sayonara',
       'tpope/vim-commentary',
       'neovim/nvim-lspconfig',
+      'github/copilot.vim',
+      'tpope/vim-unimpaired',
+      'tpope/vim-fugitive',
+      'nvim-treesitter/nvim-treesitter-refactor',
+  }
+  use {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        icons = false,
+        fold_open = "v",
+        fold_closed = ">",
+        indent_lines = false,
+        signs = {
+            error = "E",
+            warning = "W",
+            hint = "H",
+            information = "I"
+        },
+        use_diagnostic_signs = false
+      }
+    end
   }
   use {
       'lewis6991/gitsigns.nvim',
@@ -150,6 +173,8 @@ o.tabline="%!v:lua.make_tabline()"
 c [[set fillchars=fold:\ ,vert:\│,eob:\ ,msgsep:‾]]
 
 -- Keys
+k('n', 'gx', ':!xdg-open <c-r><c-a><cr>')
+
 k('i', 'jk', '<esc>')
 k('n', '<C-h>', '<C-w>h')
 k('n', '<C-j>', '<C-w>j')
@@ -183,43 +208,56 @@ k('n', '<F10>',
 aug('autosave', {'CursorHold * silent! call v:lua.autosave()'})
 aug('statusline', { 'VimEnter,WinEnter,BufWinEnter * call v:lua.refresh_statusline()' })
 
--- Colors
--- require('colors')
-
 -- LSP
 
--- local on_attach = function(client, bufnr)
---   -- Enable completion triggered by <c-x><c-o>
---   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
---   -- Mappings.
---   -- See `:help vim.lsp.*` for documentation on any of the below functions
---   local bufopts = { noremap=true, silent=true, buffer=bufnr }
---   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
---   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
---   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
---   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
---   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
---   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
---   vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
---   vim.keymap.set('n', '<space>wl', function()
---     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
---   end, bufopts)
---   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
---   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
---   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
---   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
---   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
--- end
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space><space>', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
 
--- on_attach = on_attach
+-- Diagnostic signs
+
+vim.diagnostic.config({
+  virtual_text = false
+})
+
+f.sign_define('DiagnosticSignWarn', { text = '-', texthl = 'DiagnosticSignWarn' })
+f.sign_define('DiagnosticSignError', { text = '✕', texthl = 'DiagnosticSignError' })
 
 require'lspconfig'.elixirls.setup{
     cmd = { "/home/tell/repo/other/elixir-ls/rel/language_server.sh" };
 }
 
+-- Filetypes
+
+c [[autocmd Filetype zig setlocal shiftwidth=4 tabstop=4]]
+c [[autocmd Filetype asm setlocal shiftwidth=8 tabstop=8]]
+
+-- Commentry
+
+c [[autocmd FileType zig setlocal commentstring=//\ %s]]
 
 -- FZF
+
 vim.env.FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 g.fzf_layout = { window = 'enew' }
 g.fzf_preview_window = {}
@@ -260,11 +298,9 @@ require("nvim-tree").setup {
     ignore_list = {},
   },
   view = {
-    width = '230',
-    -- height = 30,
+    width = '210',
     hide_root_folder = false,
     side = 'right',
-    -- auto_resize = true,
     mappings = {
       custom_only = false,
       list = {}
@@ -275,13 +311,26 @@ require("nvim-tree").setup {
   },
   renderer = {
     add_trailing = true,
+    highlight_git = false,
     icons = {
+      git_placement = "after",
       show = {
         file = false,
         folder = false,
         folder_arrow = false,
-        git = false,
-      }
+        git = true,
+      },
+      glyphs = {
+        git = {
+          unstaged = "~",
+          staged = "^",
+          unmerged = "u",
+          renamed = "r",
+          untracked = "?",
+          deleted = "-",
+          ignored = "i",
+        },
+      },
     }
   },
   trash = {
@@ -335,6 +384,19 @@ require'nvim-treesitter.configs'.setup {
 }
 
 -- GitSigns         
-require('gitsigns').setup()
+require('gitsigns').setup {
+  signs = {
+    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    delete       = {hl = 'GitSignsDelete', text = '⎯', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+  },
+}
+
+-- Copilot
+c [[imap <silent><script><expr> <C-l> copilot#Accept("\<CR>")]]
+g.copilot_no_tab_map = true
+
 
 c 'colorscheme simple_rick'

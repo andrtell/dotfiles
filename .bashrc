@@ -42,5 +42,8 @@ export PS0="\n"
 export PS1="\n\[$RED\]\w \[$GREEN\]$(git_prompt)\n\[$GREEN\]| \[$RESET\]"
 export PROMPT_COMMAND='PS1="\n\[$RED\]\w \[$GREEN\]$(git_prompt)\n\[$GREEN\]| \[$RESET\]"'
 
+# git completion
+. ~/.git-completion.bash
+
 # init z
 [[ -f $HOME/repo/other/z/z.sh ]] && . $HOME/repo/other/z/z.sh

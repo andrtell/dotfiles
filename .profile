@@ -5,6 +5,7 @@ paths=(\
   $HOME/bin \
   $HOME/.npm_installed/bin \
   $HOME/repo/andrtell/scripts \
+  $HOME/opt/zig-linux-x86_64-0.11.0-dev.324+f61c5f3f5 \
   $PGBIN
 )
 
