@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+run() {
+  setsid swaymsg -t command exec "$1"
+}
+
+menu=(
+  librewolf
+  chromium
+  zathura
+  gimp
+  discord
+  obs
+  emacs
+  terminal
+  files
+  sv_se
+  en_us
+  code
+  kitty
+  kitty_share
+  godot
+  virtualbox
+  gummi
+  matlab
+)
+
+CHOICE=$(
+  for c in "${menu[@]}"; do printf "%s\n" $c; done |
+    sort -ur |
+    fzf --reverse --no-info --no-scrollbar --prompt=' ' --pointer=' ' --border=none # --color=fg:#353535,bg:#fbfbfb,hl:#353535
+)
+
+if [[ "$CHOICE" != "" ]]; then
+  case "$CHOICE" in
+  "terminal")
+    run "foot"
+    ;;
+  "sv_se")
+    swaymsg input type:keyboard xkb_layout "se"
+    ;;
+  "en_us")
+    swaymsg input type:keyboard xkb_layout "us"
+    ;;
+  "files")
+    run "thunar"
+    ;;
+  "kitty")
+    run "prime-run kitty"
+    ;;
+  "kitty_share")
+    run "kitty --config /home/tell/.config/kitty/kitty-share.conf"
+    ;;
+  "godot")
+    run "prime-run godot"
+    ;;
+  "matlab")
+    run "run-matlab.sh"
+    ;;
+  *)
+    run "$CHOICE"
+    ;;
+  esac
+fi

@@ -1,0 +1,29 @@
+#!/bin/env bash
+
+help() {
+  cat <<_EOF
+Show battery capacity
+
+usage:
+
+    power <command> 
+
+commands:
+
+    show    Show the battery capacity (default).
+
+    help    Print help.
+_EOF
+}
+
+case "$1" in
+help)
+  help
+  ;;
+*)
+  CAP="$(cat /sys/class/power_supply/BAT0/capacity)%"
+  LVL="$(cat /sys/class/power_supply/BAT0/capacity_level)"
+
+  echo "$CAP ($LVL)"
+  ;;
+esac

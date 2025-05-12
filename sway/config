@@ -1,0 +1,120 @@
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+# hint: swaymsg -t get_output
+bindswitch --reload {
+	lid:on output eDP-1 disable
+	lid:off output eDP-1 enable
+}
+
+output {
+	DP-6  pos 0    0 res 3840x2160 scale 1
+	eDP-1 pos 3840 0 res 3840x2400 scale 1.5
+}
+
+output * bg $HOME/.config/sway/wallpaper.jpg fill
+
+default_border pixel 2
+default_floating_border pixel 2
+
+titlebar_border_thickness 0
+titlebar_padding 2 2
+
+smart_gaps on
+smart_borders on
+
+focus_follows_mouse no
+focus_on_window_activation smart
+
+gaps outer 0
+gaps inner 0
+
+font pango:monospace 1
+
+#-----------------------border--bkgrnd--text----indctor-child border
+#-------------------------------------------------------------------
+client.focused          #707070 #BF7070 #424242 #323232	#A34C4C
+client.focused_inactive #707070 #707070 #323232 #323232	#403E3C
+client.unfocused        #a0a0a0 #a0a0a0 #605E5C #323232	#403E3C
+
+for_window [app_id="menu"] floating enabled
+for_window [app_id="menu"] border pixel 2
+
+seat * hide_cursor 1000
+
+input * {
+	xkb_options ctrl:nocaps
+	repeat_delay 210
+	repeat_rate 60
+}
+
+set {
+    $win Mod4
+    $alt Mod1
+}
+
+set {
+    $down j
+    $left h
+    $up k
+    $right l
+}
+
+set $mod $alt
+
+
+bindsym {
+	$mod+Shift+e exit
+	$mod+Shift+c reload
+
+	$mod+w kill
+
+	$mod+d exec foot -c ~/.config/foot/foot-menu.ini -w "420x480" -a menu ~/repo/bash-scripts/menu.bash
+	$mod+Return exec foot -T "_"
+
+	$mod+$left	focus left
+	$mod+$right	focus right
+	$mod+$up	focus up
+	$mod+$down	focus down
+
+	$mod+Shift+$left    move left
+	$mod+Shift+$right   move right
+	$mod+Shift+$up      move up
+	$mod+Shift+$down    move down
+	
+	$mod+m splitv
+	$mod+n splith
+	$mod+s layout toggle split
+	$mod+Shift+s layout tabbed
+
+	$mod+f fullscreen
+	$mod+r mode "resize"
+
+	$mod+left workspace prev
+	$mod+right workspace next
+
+	$mod+1 workspace 1
+	$mod+2 workspace 2
+	$mod+3 workspace 3
+	$mod+4 workspace 4
+	$mod+5 workspace 5
+	
+	$mod+Shift+1 move container to workspace number 1
+	$mod+Shift+2 move container to workspace number 2
+	$mod+Shift+3 move container to workspace number 3
+	$mod+Shift+4 move container to workspace number 4
+	$mod+Shift+5 move container to workspace number 5
+
+	$mod+Shift+minus move scratchpad
+	$mod+Shift+space floating toggle
+	$mod+minus scratchpad show
+}
+
+mode "resize" bindsym {
+	$right  resize shrink width  10px
+	$down   resize grow   height 10px
+	$up     resize shrink height 10px
+	$left   resize grow   width  10px
+	Return mode "default"
+	Escape mode "default"
+}
