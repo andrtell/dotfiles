@@ -62,14 +62,13 @@ set {
 
 set $mod $alt
 
-
 bindsym {
 	$mod+Shift+e exit
 	$mod+Shift+c reload
 
 	$mod+w kill
 
-	$mod+d exec foot -c ~/.config/foot/foot-menu.ini -w "420x480" -a menu ~/repo/bash-scripts/menu.bash
+	$mod+d exec foot -c ~/.config/foot/foot-menu.ini -w "420x480" -a menu ~/repo/dotfiles/scripts/menu
 	$mod+Return exec foot -T "_"
 
 	$mod+$left	focus left
@@ -81,7 +80,7 @@ bindsym {
 	$mod+Shift+$right   move right
 	$mod+Shift+$up      move up
 	$mod+Shift+$down    move down
-	
+
 	$mod+m splitv
 	$mod+n splith
 	$mod+s layout toggle split
@@ -98,7 +97,7 @@ bindsym {
 	$mod+3 workspace 3
 	$mod+4 workspace 4
 	$mod+5 workspace 5
-	
+
 	$mod+Shift+1 move container to workspace number 1
 	$mod+Shift+2 move container to workspace number 2
 	$mod+Shift+3 move container to workspace number 3

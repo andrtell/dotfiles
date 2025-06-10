@@ -5,34 +5,41 @@ run() {
 }
 
 menu=(
-  librewolf
+  browser
   chromium
+  emacs
   zathura
   gimp
-  discord
   obs
-  emacs
   terminal
   files
   sv_se
   en_us
-  code
-  kitty
-  kitty_share
-  godot
-  virtualbox
-  gummi
-  matlab
+  squeak
+  glam
+  cursor
 )
 
 CHOICE=$(
   for c in "${menu[@]}"; do printf "%s\n" $c; done |
     sort -ur |
-    fzf --reverse --no-info --no-scrollbar --prompt=' ' --pointer=' ' --border=none # --color=fg:#353535,bg:#fbfbfb,hl:#353535
+    fzf --reverse --no-info --no-scrollbar --prompt=' ' --pointer=' ' --border=none
 )
 
 if [[ "$CHOICE" != "" ]]; then
   case "$CHOICE" in
+  "cursor")
+    run "$HOME/opt/cursor"
+    ;;
+  "glam")
+    run "$HOME/opt/glamorous-toolkit/bin/GlamorousToolkit"
+    ;;
+  "squeak")
+    run "$HOME/opt/squeak/squeak.sh"
+    ;;
+  "emacs")
+    run "emacs"
+    ;;
   "terminal")
     run "foot"
     ;;
@@ -45,17 +52,8 @@ if [[ "$CHOICE" != "" ]]; then
   "files")
     run "thunar"
     ;;
-  "kitty")
-    run "prime-run kitty"
-    ;;
-  "kitty_share")
-    run "kitty --config /home/tell/.config/kitty/kitty-share.conf"
-    ;;
-  "godot")
-    run "prime-run godot"
-    ;;
-  "matlab")
-    run "run-matlab.sh"
+  "browser")
+    run "librewolf"
     ;;
   *)
     run "$CHOICE"
